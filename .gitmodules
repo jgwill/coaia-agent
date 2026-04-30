@@ -1,3 +1,6 @@
 [submodule "tinker-atropos"]
 	path = tinker-atropos
 	url = https://github.com/nousresearch/tinker-atropos
+[submodule "llms"]
+	path = llms
+	url = git@github.com:jgwill/llms-txt.git
