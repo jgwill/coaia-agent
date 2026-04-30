@@ -1,0 +1,35 @@
+{
+  "agentSessionId": "s2",
+  "workdir": "/home/runner/work/coaia-agent/coaia-agent",
+  "pdeUuid": "pde-abc",
+  "pdeFolderName": "2604291200--pde-abc",
+  "stcSessionUuid": null,
+  "masterChartId": null,
+  "currentStage": "decompose",
+  "status": "decomposing",
+  "provenance": [
+    {
+      "timestamp": "2026-04-30T02:58:10.122111+00:00",
+      "skillId": "coaia-lifecycle",
+      "stage": "init",
+      "description": "COAIA lifecycle session started",
+      "reviewWindowOpened": false,
+      "durationMs": 0
+    },
+    {
+      "timestamp": "2026-04-30T02:58:10.122152+00:00",
+      "skillId": "pde-decompose",
+      "stage": "decompose",
+      "description": "pde_decompose completed — pde_uuid=pde-abc",
+      "reviewWindowOpened": false,
+      "durationMs": 0,
+      "artifact": {
+        "type": "pde-json",
+        "path": ".pde/2604291200--pde-abc/pde-pde-abc.json",
+        "id": "pde-abc"
+      }
+    }
+  ],
+  "createdAt": "2026-04-30T02:58:10.122100+00:00",
+  "updatedAt": "2026-04-30T02:58:10.122156+00:00"
+}

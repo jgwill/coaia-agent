@@ -1,0 +1,8 @@
+name: coaia-lifecycle
+version: 0.1.0
+description: "COAIA RISE session lifecycle plugin — creates and finalizes PDE/STC artifacts automatically via on_session_start, post_tool_call, and on_session_end hooks."
+author: "COAIA (jgwill)"
+hooks:
+  - on_session_start
+  - post_tool_call
+  - on_session_end
