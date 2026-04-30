@@ -159,6 +159,7 @@ document points to them; it does not duplicate them.
 | ACP editor adapter and dashboard integration | [`acp-and-gateway-surfaces.spec.md`](./acp-and-gateway-surfaces.spec.md) | NORTH N6 |
 | Ceremony phase annotation, OCAP, consent lifecycle | [`medicine-wheel-governance.spec.md`](./medicine-wheel-governance.spec.md) | NORTH N7 |
 | Optional Veritas STC companion and MMOT loop | [`veritas-mmot-companion.spec.md`](./veritas-mmot-companion.spec.md) | NORTH N8 |
+| Wiki, QMD, promotion, and episodic recall layer | [`wiki-qmd-episodic-promotion.spec.md`](./wiki-qmd-episodic-promotion.spec.md) | WEST/NORTH bridge |
 | Named contradictions ledger | [`contradictions.md`](./contradictions.md) | WEST W1 |
 | Kinship hub relation | [`relation-to-mcp-structural-thinking.kin.md`](./relation-to-mcp-structural-thinking.kin.md) | WEST W2 |
 
@@ -204,6 +205,16 @@ PDE/STC session visible in editor without terminal.
 
 **Spec owner**: [`acp-and-gateway-surfaces.spec.md`](./acp-and-gateway-surfaces.spec.md)
 
+### Phase 5 — Wiki, QMD, and Episodic Promotion
+
+Completed sessions, rispec updates, issue/commit traces, and QMD-enriched inquiry outputs
+are promoted into `/workspace/wikis/coaia-agent` as concise explanatory pages. QMD remains
+a retrieval/enrichment substrate, not the authoritative routing ontology. Future
+automation may appear as skills, subagents, plugins, or MCP/QMD bridges.
+
+**Spec owner**:
+[`wiki-qmd-episodic-promotion.spec.md`](./wiki-qmd-episodic-promotion.spec.md)
+
 ---
 
 ## Open Architecture Questions (Not Resolved by This Pack)
@@ -218,3 +229,5 @@ PDE/STC session visible in editor without terminal.
 5. **Source provenance discriminator**: Should `metadata.source` be emitted by coaia-agent
    before `schema-evolution-and-ecosystem-metadata.spec.md` is implemented? If yes, which
    value? To be specified in `pde-stc-session-lifecycle.spec.md`.
+6. **Promotion authority**: Which outputs are allowed to move from provenance or rispecs
+   into the public wiki automatically, and which require a human promotion decision?

@@ -48,6 +48,7 @@ referenced, not duplicated, here.
 | `acp-and-gateway-surfaces.spec.md` | NORTH lane N6 | ACP editor adapter and dashboard integration |
 | `medicine-wheel-governance.spec.md` | NORTH lane N7 | Ceremony phase annotation, OCAP, consent lifecycle |
 | `veritas-mmot-companion.spec.md` | NORTH lane N8 | Optional Veritas STC companion and MMOT loop |
+| `wiki-qmd-episodic-promotion.spec.md` | WEST/NORTH bridge | Wiki, QMD, promotion, and episodic recall layer |
 | `contradictions.md` | WEST lane W1 | Named contradictions ledger; do not silently resolve |
 | `relation-to-mcp-structural-thinking.kin.md` | WEST lane W2 | Kinship hub relation (required in all rispecs folders) |
 
