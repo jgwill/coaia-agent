@@ -11,7 +11,7 @@ schema-evolution-and-ecosystem-metadata spec §4.
 
 from __future__ import annotations
 
-import datetime
+from datetime import datetime as _dt, timezone
 from typing import Dict, Optional, Any
 
 
@@ -71,7 +71,7 @@ def make_source_provenance(
         )
 
     if created_at is None:
-        created_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+        created_at = _dt.now(timezone.utc).isoformat()
 
     record: Dict[str, Any] = {
         "system": system,

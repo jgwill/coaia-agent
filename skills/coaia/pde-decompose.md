@@ -32,6 +32,8 @@ Use the `pde_decompose` MCP tool to decompose the current session prompt or the 
 All direction values must be normalized to UPPERCASE before reporting or passing to downstream tools:
 - `"east"` → `"EAST"`, `"south"` → `"SOUTH"`, `"west"` → `"WEST"`, `"north"` → `"NORTH"`
 
+> **Note**: When the `coaia-lifecycle` plugin is installed, direction normalization from `pde_decompose` results happens automatically via the `post_tool_call` hook. You do not need to manually normalize directions if the plugin is active.
+
 ## Review window
 
 After reporting the PDE artifacts, **pause and invite the practitioner to review** the decomposition before proceeding to Stage 2 (`/stc`). Ask:

@@ -255,15 +255,6 @@ class _FakePluginContext:
         self.commands[name] = handler
 
 
-@pytest.fixture(autouse=True)
-def _isolate_env(tmp_path, monkeypatch):
-    """Redirect HERMES_HOME for each test."""
-    hermes_home = tmp_path / ".hermes"
-    hermes_home.mkdir()
-    monkeypatch.setenv("HERMES_HOME", str(hermes_home))
-    yield hermes_home
-
-
 @pytest.fixture
 def plugin_mod(session_state_mod):
     """Load plugin __init__.py, injecting the already-loaded sub-modules."""
@@ -369,6 +360,34 @@ class TestPostToolCall:
         assert result["result"]["secondary"][0]["direction"] == "EAST"
         assert result["result"]["actionStack"][0]["direction"] == "SOUTH"
         plugin_mod._sessions.pop("s2b", None)
+
+    def test_pde_decompose_with_json_string_result_captures_uuid(self, plugin_mod):
+        """When result is a JSON string, pde_uuid is captured from the parsed dict.
+
+        Direction normalization happens on the parsed dict inside the plugin;
+        the original string is unchanged (strings are immutable in Python).
+        The important postcondition is that session state captures pde_uuid.
+        """
+        plugin_mod._on_session_start(session_id="s2c")
+        result_str = json.dumps({
+            "id": "pde-str",
+            "folder_name": "2604291200--pde-str",
+            "result": {
+                "secondary": [{"direction": "east", "text": "action"}],
+                "actionStack": [],
+            },
+        })
+        plugin_mod._on_post_tool_call(
+            tool_name="pde_decompose",
+            result=result_str,
+            session_id="s2c",
+        )
+        with plugin_mod._lock:
+            state = plugin_mod._sessions.get("s2c")
+        assert state is not None
+        assert state.pde_uuid == "pde-str"
+        assert state.pde_folder_name == "2604291200--pde-str"
+        plugin_mod._sessions.pop("s2c", None)
 
     def test_non_coaia_tool_ignored(self, plugin_mod):
         plugin_mod._on_session_start(session_id="s3")

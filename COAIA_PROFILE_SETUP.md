@@ -16,7 +16,7 @@ No Hermes source files are modified.
 | Node.js ≥ 18 | `node --version` |
 | npx (bundled with Node.js) | `npx --version` |
 | hermes-agent installed | `hermes --version` |
-| mcp optional extra | `pip show hermes-agent \| grep -i mcp` |
+| mcp optional extra | `pip show hermes-agent | grep -i mcp` |
 | At least one LLM API key | `echo $OPENAI_API_KEY` (or equivalent) |
 
 Install hermes-agent with MCP support if needed:
