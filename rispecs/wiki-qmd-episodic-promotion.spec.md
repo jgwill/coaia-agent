@@ -1,8 +1,8 @@
-# Wiki, QMD, and Episodic Promotion Layer - RISE Specification
+# Wiki, QMD, and Memory Maturation Layer - RISE Specification
 
 > How coaia-agent turns completed sessions, rispecs, and QMD-enriched inquiry into a
 > durable wiki-facing knowledge layer without collapsing provenance, specification,
-> explanation, retrieval, and episodic memory into one undifferentiated store.
+> explanation, retrieval, and still-emerging episodic memory into one undifferentiated store.
 
 **Version**: 0.1.0
 **Document ID**: wiki-qmd-episodic-promotion-v1
@@ -23,12 +23,12 @@
 
 coaia-agent has a durable explanatory wiki at `/workspace/wikis/coaia-agent` that can be
 read by humans, queried by QMD, and maintained by future skills, subagents, or plugins.
-The wiki is not a raw dump of rispecs. It is a promoted layer that explains the runtime,
+The wiki is not a raw dump of rispecs. It is a germination layer that explains the runtime,
 COAIA integration path, artifact lifecycle, governance posture, and roadmap in concise,
-cross-linked pages.
+cross-linked pages while memory continues to mature.
 
-The same layer also defines how completed work moves from a live session into stable
-knowledge:
+The same layer also defines how completed work begins moving from a live session into
+stable knowledge. It does not claim that a page or rispec is already true episodic memory:
 
 ```
 session / issue / commit / PDE artifact
@@ -36,7 +36,7 @@ session / issue / commit / PDE artifact
   -> rispec or spec update
   -> wiki-facing explanation
   -> QMD-searchable retrieval surface
-  -> episodic recall input for later sessions
+  -> candidate seed for later episodic assimilation
 ```
 
 ---
@@ -51,23 +51,27 @@ session / issue / commit / PDE artifact
 - The Miadi wiki demonstrates the desired explanatory shape: compact pages, cross-links,
   and explicit separation between provenance, spec, wiki, and retrieval.
 - The deep-search wave on Karpathy's LLM Wiki pattern argues for a persistent markdown
-  knowledge layer with ingest, query, lint, and promotion discipline.
+  knowledge layer with ingest, query, lint, and promotion discipline, but the path from
+  written page to living episodic memory is not fully understood or integrated.
 - QMD is available as a remote indexed library across wikis, Miadi docs, IAIP artifacts,
   llms-txt, and rispecs. It can fail on semantic query expansion under VRAM pressure, so
   lexical search must remain a valid fallback path.
 
 **Desired Outcome**
 
-coaia-agent maintains a promoted wiki layer that can be updated incrementally after RISE
+coaia-agent maintains a wiki germination layer that can be updated incrementally after RISE
 sessions. QMD is used to retrieve and enrich context, but the wiki and rispec layers remain
-the authored sources of durable explanation and specification.
+the authored sources of durable explanation and specification. Episodic memory is treated
+as an emergent later-stage integration, not as the immediate result of writing files.
 
 **Tension**
 
-The project needs memory that is more stable than raw session traces but less binding than
-implementation specs. If the wiki copies rispecs wholesale, it becomes unusable. If QMD
-retrieval is treated as authority, it hides provenance and human decision gates. If episodic
-records are not promoted, later sessions repeat the same orientation work.
+The project needs memory to mature across time. A newly written wiki page or rispec is a
+seed: it can germinate, receive nourishment through use and review, flower into trusted
+orientation, and only then become a candidate for true episodic integration. If the wiki
+copies rispecs wholesale, it becomes unusable. If QMD retrieval is treated as authority,
+it hides provenance and human decision gates. If every page is declared episodic too early,
+the system confuses fresh writing with assimilated memory.
 
 ---
 
@@ -81,20 +85,23 @@ coaia-agent adopts the same knowledge layer distinction demonstrated by the Miad
 | Spec / rispec | Intended behavior and boundaries | `rispecs/*.spec.md`, contradiction ledger, package contracts |
 | Wiki | Concise explanation and navigation | `/workspace/wikis/coaia-agent/*.md` |
 | Retrieval | Access and context composition | QMD collections, context assembly, future search tools |
-| Episodic | Later-session continuity | promotion logs, session summaries, issue/commit memory, STC lineage |
+| Episodic candidate | Later-session continuity after maturation | promotion logs, session summaries, issue/commit memory, STC lineage |
 
 The wiki layer must not pretend to replace the rispec layer. It points to rispecs where
 binding detail is needed and keeps pages short enough to be useful as an orientation web.
 
 ---
 
-## 2. Promotion Chain
+## 2. Maturation Chain
 
-The promotion chain for coaia-agent is:
+The maturation chain for coaia-agent is:
 
 ```
-Provenance -> Rispec/Spec -> Wiki -> Retrieval -> Episodic Recall
+Provenance -> Rispec/Spec -> Wiki -> Retrieval -> Episodic Candidate -> Assimilated Memory
 ```
+
+The final step is intentionally provisional. The system does not yet fully understand how
+to decide that a page has become assimilated episodic memory.
 
 ### 2.1 Provenance
 
@@ -139,9 +146,9 @@ QMD indexes the wiki and adjacent markdown collections so later sessions can fin
 right page, rispec, or provenance artifact. QMD is a retrieval substrate. It is not the
 only routing ontology and does not decide what is true.
 
-### 2.5 Episodic Recall
+### 2.5 Episodic Candidate
 
-Promotion events should become recallable by future sessions:
+Promotion events can become candidates for future recall:
 
 - what was promoted
 - from which sources
@@ -149,8 +156,24 @@ Promotion events should become recallable by future sessions:
 - what was deferred
 - what contradiction or human decision remains open
 
-The initial wiki may encode this in page text. A future implementation may add an
-append-only promotion log.
+The initial wiki records candidate memory in page text and in a promotion log. A future
+implementation may add an append-only episodic store after the project has learned which
+signals actually mark assimilation.
+
+### 2.6 Maturation Model
+
+The natural metaphor for this layer is growth over time:
+
+| Stage | Meaning |
+| --- | --- |
+| Seed | A session, issue, rispec, or page is created |
+| Germination | The material becomes visible and linkable in the wiki |
+| Nourishment | Later sessions query, cite, correct, and reuse it |
+| Flowering | The material proves stable enough to orient real work |
+| Completion | It may become an episodic memory candidate with documented lineage |
+
+This may take weeks or months. The system must allow knowledge to remain young without
+forcing it into final memory shape.
 
 ---
 
@@ -163,7 +186,7 @@ through one or more of these surfaces:
 | --- | --- | --- |
 | Skill | Human invokes `/wiki-promote`, `/qmd-promote`, or `/wiki-lint` in a session | Good first implementation path; matches profile-local skill model |
 | Subagent | A bounded worker drafts wiki pages or checks cross-links | Useful for large promotion waves; must preserve source citations |
-| Plugin | Lifecycle hook records promotion metadata after session close | Useful after the core lifecycle plugin exists |
+| Plugin | Lifecycle hook records maturation metadata after session close | Useful after the core lifecycle plugin exists |
 | MCP/QMD bridge | Runtime queries QMD or local wiki index for enrichment | QMD remains search/enrichment, not final authority |
 | Manual process | Human-curated wiki update following this contract | Valid for the first wiki creation wave |
 
@@ -220,13 +243,13 @@ The first `/workspace/wikis/coaia-agent` wave should create pages for:
 | Page | Purpose |
 | --- | --- |
 | `Home.md` | Entry point and reading path |
-| `Knowledge-Layers.md` | Provenance/spec/wiki/retrieval/episodic distinction |
+| `Knowledge-Layers.md` | Provenance/spec/wiki/retrieval/episodic-candidate distinction |
 | `RISE-Integration.md` | What the RISE spec pack enables |
 | `PDE-to-STC-Lifecycle.md` | Prompt -> PDE -> STC -> visualizer artifact path |
 | `Package-and-Adapter-Boundaries.md` | Required packages, optional packages, direction/source adapters |
 | `Skills-and-Lifecycle-Plugin.md` | Manual skills now, plugin automation later |
 | `Governance-and-Contradictions.md` | Human-gated decisions and accountability boundaries |
-| `Wiki-QMD-and-Episodic-Promotion.md` | This promotion layer in wiki-facing form |
+| `Wiki-QMD-and-Episodic-Promotion.md` | This maturation layer in wiki-facing form |
 | `Roadmap.md` | Phase 0/1 core path and Phase 2+ extensions |
 
 The wiki should initially point to local rispec paths and GitHub issues. A later pass can
@@ -236,7 +259,8 @@ replace local paths with public URLs if a stable publishing convention is chosen
 
 ## 7. Promotion Record Contract
 
-Each promotion wave should record:
+Each wiki promotion wave should record that it is creating a candidate, not finished
+episodic memory:
 
 ```markdown
 ## Promotion Record
@@ -248,10 +272,11 @@ Each promotion wave should record:
 - Pages created or changed:
 - Deferred material:
 - Human-gated decisions preserved:
+- Maturation state: seed | germination | nourishment | flowering | completion-candidate
 ```
 
 This may live in a dedicated `Promotion-Log.md` page or in commit messages until a more
-formal episodic store is implemented.
+formal episodic store is understood and implemented.
 
 ---
 
@@ -261,6 +286,7 @@ formal episodic store is implemented.
 - This spec does not define QMD as the routing ontology for all inquiry work.
 - This spec does not replace `rispecs/` with wiki pages.
 - This spec does not import raw deep-search artifacts directly into the wiki.
+- This spec does not claim that writing a wiki page is enough to create episodic memory.
 - This spec does not resolve runtime identity, direction casing, Veritas defaults, or
   Medicine Wheel authority decisions.
 
@@ -269,9 +295,9 @@ formal episodic store is implemented.
 ## 9. Acceptance Criteria
 
 - [ ] `/workspace/wikis/coaia-agent` contains a concise, cross-linked wiki page web
-- [ ] The wiki distinguishes provenance, rispec/spec, wiki, retrieval, and episodic layers
+- [ ] The wiki distinguishes provenance, rispec/spec, wiki, retrieval, and episodic-candidate layers
 - [ ] Pages cite or point to relevant `rispecs/` files and GitHub issues
 - [ ] QMD is documented as search/enrichment substrate, not final authority
-- [ ] The first wiki wave includes a page explaining wiki/QMD/episodic promotion
+- [ ] The first wiki wave includes a page explaining wiki/QMD/memory maturation
 - [ ] Human-gated contradictions remain visible and unresolved unless explicitly decided
 - [ ] Future automation can implement this layer as skills, subagents, plugins, or MCP/QMD bridges without changing the promotion contract

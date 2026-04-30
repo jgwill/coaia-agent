@@ -159,7 +159,7 @@ document points to them; it does not duplicate them.
 | ACP editor adapter and dashboard integration | [`acp-and-gateway-surfaces.spec.md`](./acp-and-gateway-surfaces.spec.md) | NORTH N6 |
 | Ceremony phase annotation, OCAP, consent lifecycle | [`medicine-wheel-governance.spec.md`](./medicine-wheel-governance.spec.md) | NORTH N7 |
 | Optional Veritas STC companion and MMOT loop | [`veritas-mmot-companion.spec.md`](./veritas-mmot-companion.spec.md) | NORTH N8 |
-| Wiki, QMD, promotion, and episodic recall layer | [`wiki-qmd-episodic-promotion.spec.md`](./wiki-qmd-episodic-promotion.spec.md) | WEST/NORTH bridge |
+| Wiki, QMD, and memory maturation layer | [`wiki-qmd-episodic-promotion.spec.md`](./wiki-qmd-episodic-promotion.spec.md) | WEST/NORTH bridge |
 | Named contradictions ledger | [`contradictions.md`](./contradictions.md) | WEST W1 |
 | Kinship hub relation | [`relation-to-mcp-structural-thinking.kin.md`](./relation-to-mcp-structural-thinking.kin.md) | WEST W2 |
 
@@ -205,11 +205,12 @@ PDE/STC session visible in editor without terminal.
 
 **Spec owner**: [`acp-and-gateway-surfaces.spec.md`](./acp-and-gateway-surfaces.spec.md)
 
-### Phase 5 — Wiki, QMD, and Episodic Promotion
+### Phase 5 — Wiki, QMD, and Memory Maturation
 
 Completed sessions, rispec updates, issue/commit traces, and QMD-enriched inquiry outputs
-are promoted into `/workspace/wikis/coaia-agent` as concise explanatory pages. QMD remains
-a retrieval/enrichment substrate, not the authoritative routing ontology. Future
+germinate into `/workspace/wikis/coaia-agent` as concise explanatory pages. QMD remains
+a retrieval/enrichment substrate, not the authoritative routing ontology. Episodic memory
+is a later maturation possibility, not an immediate result of page writing. Future
 automation may appear as skills, subagents, plugins, or MCP/QMD bridges.
 
 **Spec owner**:
