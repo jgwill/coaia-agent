@@ -1,0 +1,42 @@
+# COAIA profile config.yaml example
+# Copy to ~/.coaia-agent/config.yaml after running: hermes --setup
+# Profile isolation: HERMES_HOME=~/.coaia-agent
+
+# --- Standard hermes-agent settings (fill in via hermes --setup) ---
+# model:
+#   provider: openai
+#   name: gpt-4o
+
+# --- COAIA MCP servers ---
+mcp:
+  servers:
+    mcp-pde:
+      command: npx
+      args: ["-y", "@jgwill/mcp-pde"]
+      env:
+        # Where mcp-pde writes .pde/ artifacts. Defaults to .pde/ in cwd.
+        PDE_STORAGE_PATH: "${COAIA_PDE_PATH:-.pde}"
+    coaia-narrative:
+      command: npx
+      args: ["-y", "@avadisabelle/coaia-narrative"]
+      env:
+        # Where coaia-narrative writes .coaia/ JSONL files. Defaults to .coaia/ in cwd.
+        MEMORY_PATH: "${COAIA_NARRATIVE_PATH:-.coaia}"
+
+# --- Optional: Veritas companion (disabled by default — bootstrap paradox; see contradictions.md C5) ---
+# veritas:
+#   enabled: false
+#   auto_create_companion: false
+#   mmot_use_veritas: false
+#   local_eval_fallback: true
+#   api_base: "https://veritas.sanctuaireagentique.com"
+
+# --- Optional: COAIA planning sync (disabled by default) ---
+# coaia_planning:
+#   enabled: false
+#   plans_dir: "~/.claude/plans"
+#   output_dir: "coaia-planning/output"
+
+# --- Optional: Medicine Wheel governance (disabled by default — see contradictions.md C3) ---
+# medicine_wheel:
+#   enabled: false
