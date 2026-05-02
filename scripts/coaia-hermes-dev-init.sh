@@ -25,7 +25,7 @@ Creates a local Docker Compose dev setup for this checkout.
 
 Options:
   --start      Build/start the background container after writing files
-  --login      Run OpenAI Codex login after starting the container
+  --login      Run OpenAI Codex auth after starting the container
   --tui        Launch the TUI after starting the container
   -h, --help   Show this help
 
@@ -179,9 +179,13 @@ case "${1:-help}" in
     shift || true
     compose exec --user hermes "$SERVICE" bash "$@"
     ;;
+  auth)
+    shift || true
+    compose exec --user hermes "$SERVICE" hermes auth "$@"
+    ;;
   login)
     shift || true
-    compose exec --user hermes "$SERVICE" hermes login --provider openai-codex "$@"
+    compose exec --user hermes "$SERVICE" hermes auth add openai-codex "$@"
     ;;
   model)
     shift || true
@@ -214,7 +218,8 @@ Usage: coaia-hermes <command> [args]
 Commands:
   up          Build/start the background dev container
   tui         Launch Hermes TUI in /workspace/coaia-agent
-  login       Run OpenAI Codex device login inside the isolated container state
+  auth ...    Manage Hermes credentials inside the isolated container state
+  login       Alias for: auth add openai-codex
   model       Open Hermes model picker
   shell       Open a non-root shell as the hermes user
   hermes ...  Run any hermes command as the hermes user
@@ -264,7 +269,7 @@ do not conflict with local container workflow files.
 
 ```bash
 coaia-hermes up
-coaia-hermes login
+coaia-hermes auth add openai-codex
 coaia-hermes tui
 ```
 
@@ -294,7 +299,7 @@ Symlink:     $HOME/.local/bin/coaia-hermes
 
 Next:
   coaia-hermes up
-  coaia-hermes login
+  coaia-hermes auth add openai-codex
   coaia-hermes tui
 EOF
 
@@ -302,7 +307,7 @@ if [ "$START" = 1 ]; then
   "$COAIA_HOME/bin/coaia-hermes" up
 fi
 if [ "$LOGIN" = 1 ]; then
-  "$COAIA_HOME/bin/coaia-hermes" login
+  "$COAIA_HOME/bin/coaia-hermes" auth add openai-codex
 fi
 if [ "$TUI" = 1 ]; then
   "$COAIA_HOME/bin/coaia-hermes" tui
