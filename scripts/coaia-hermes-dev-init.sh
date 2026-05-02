@@ -34,6 +34,7 @@ Environment overrides:
   COAIA_REPO   Repo to mount (default: parent of this script)
   HERMES_UID   Host UID to map to container hermes user
   HERMES_GID   Host GID to map to container hermes group
+  COAIA_TUI_MOUSE  TUI mouse tracking default: off|on (default: off)
 EOF
 }
 
@@ -106,6 +107,10 @@ HERMES_GID=$HERMES_GID
 
 # This file is also mounted into the container as /opt/data/.env.
 # You can add Hermes/API secrets here later if you use API-key providers.
+#
+# COAIA_TUI_MOUSE defaults to off so terminal selection, right-click copy,
+# and middle-click paste keep working in `coaia-hermes tui`.
+COAIA_TUI_MOUSE=off
 ENV_EOF
 else
   # Keep existing secrets/config, but make sure required keys exist.
@@ -114,6 +119,7 @@ else
   grep -q '^COAIA_REPO=' "$COAIA_HOME/.env" || printf 'COAIA_REPO=%s\n' "$COAIA_REPO" >> "$COAIA_HOME/.env"
   grep -q '^HERMES_UID=' "$COAIA_HOME/.env" || printf 'HERMES_UID=%s\n' "$HERMES_UID" >> "$COAIA_HOME/.env"
   grep -q '^HERMES_GID=' "$COAIA_HOME/.env" || printf 'HERMES_GID=%s\n' "$HERMES_GID" >> "$COAIA_HOME/.env"
+  grep -q '^COAIA_TUI_MOUSE=' "$COAIA_HOME/.env" || printf 'COAIA_TUI_MOUSE=off\n' >> "$COAIA_HOME/.env"
 fi
 
 cat > "$COAIA_HOME/bin/coaia-hermes" <<'LAUNCHER_EOF'
@@ -126,6 +132,47 @@ SERVICE="${COAIA_SERVICE:-hermes-dev}"
 
 compose() {
   docker compose --env-file "$COAIA_HOME/.env" -f "$COMPOSE_FILE" "$@"
+}
+
+load_local_env_default() {
+  local key="$1"
+  local current="${!key-}"
+  local line
+  if [ -n "$current" ] || [ ! -f "$COAIA_HOME/.env" ]; then
+    return
+  fi
+  line="$(grep -E "^${key}=" "$COAIA_HOME/.env" | tail -n 1 || true)"
+  if [ -n "$line" ]; then
+    printf -v "$key" '%s' "${line#*=}"
+    export "$key"
+  fi
+}
+
+tui_mouse_enabled() {
+  load_local_env_default COAIA_TUI_MOUSE
+  case "${COAIA_TUI_MOUSE:-off}" in
+    1|true|TRUE|yes|YES|on|ON|enable|ENABLE|enabled|ENABLED)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+set_tui_mouse_config() {
+  local value="$1"
+  compose exec -T --user hermes "$SERVICE" hermes config set display.mouse_tracking "$value" >/dev/null
+}
+
+run_tui() {
+  if tui_mouse_enabled; then
+    set_tui_mouse_config true
+    compose exec --user hermes "$SERVICE" hermes --tui --provider openai-codex "$@"
+  else
+    set_tui_mouse_config false
+    compose exec --user hermes -e HERMES_TUI_DISABLE_MOUSE=1 "$SERVICE" hermes --tui --provider openai-codex "$@"
+  fi
 }
 
 ensure_env() {
@@ -193,7 +240,7 @@ case "${1:-help}" in
     ;;
   tui)
     shift || true
-    compose exec --user hermes "$SERVICE" hermes --tui --provider openai-codex "$@"
+    run_tui "$@"
     ;;
   hermes)
     shift || true
@@ -237,6 +284,10 @@ Files:
   compose: ~/.coaia-agent/compose.yml
   state:   ~/.coaia-agent/  mounted as /opt/data
   repo:    COAIA_REPO from ~/.coaia-agent/.env mounted as /workspace/coaia-agent
+
+TUI mouse:
+  default: off, so terminal selection/copy and middle-click paste work
+  enable:  COAIA_TUI_MOUSE=on coaia-hermes tui
 EOF
     ;;
   *)
@@ -261,6 +312,8 @@ container without using or modifying the existing `~/.hermes` installation.
 - Host Hermes state: `~/.coaia-agent`
 - Container Hermes state: `/opt/data`
 - Container subprocess home: `/opt/data/home`
+- TUI mouse tracking: off by default, so terminal selection/copy and
+  middle-click paste keep working
 
 The compose file intentionally lives outside the repo so normal upstream pulls
 do not conflict with local container workflow files.
@@ -271,6 +324,12 @@ do not conflict with local container workflow files.
 coaia-hermes up
 coaia-hermes auth add openai-codex
 coaia-hermes tui
+```
+
+To temporarily enable TUI mouse/wheel tracking:
+
+```bash
+COAIA_TUI_MOUSE=on coaia-hermes tui
 ```
 
 General shell:
