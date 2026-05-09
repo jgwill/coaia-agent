@@ -12,6 +12,10 @@ COAIA_REPO="${COAIA_REPO:-$DEFAULT_REPO}"
 COAIA_HOME="${COAIA_HOME:-$HOME/.coaia-agent}"
 HERMES_UID="${HERMES_UID:-$(id -u)}"
 HERMES_GID="${HERMES_GID:-$(id -g)}"
+COAIA_VISUALIZER_HOST_PORT="${COAIA_VISUALIZER_HOST_PORT:-4421}"
+COAIA_VISUALIZER_PORT="${COAIA_VISUALIZER_PORT:-4422}"
+COAIA_VISUALIZER_MEMORY="${COAIA_VISUALIZER_MEMORY:-/opt/data/memory.jsonl}"
+COAIA_VISUALIZER_AUDIO_DIR="${COAIA_VISUALIZER_AUDIO_DIR:-/opt/data/audio}"
 
 START=0
 LOGIN=0
@@ -35,6 +39,10 @@ Environment overrides:
   HERMES_UID   Host UID to map to container hermes user
   HERMES_GID   Host GID to map to container hermes group
   COAIA_TUI_MOUSE  TUI mouse tracking default: off|on (default: off)
+  COAIA_VISUALIZER_HOST_PORT  Host port for visualizer default route (default: 4421)
+  COAIA_VISUALIZER_PORT       Live visualizer port inside/outside container (default: 4422)
+  COAIA_VISUALIZER_MEMORY     Container JSONL memory path (default: /opt/data/memory.jsonl)
+  COAIA_VISUALIZER_AUDIO_DIR  Container narrative audio dir (default: /opt/data/audio)
 EOF
 }
 
@@ -64,9 +72,27 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-mkdir -p "$COAIA_HOME/bin" "$HOME/.local/bin"
+mkdir -p "$COAIA_HOME/bin" "$HOME/.local/bin" "$COAIA_HOME/audio"
+touch "$COAIA_HOME/memory.jsonl"
 
-cat > "$COAIA_HOME/compose.yml" <<'COMPOSE_EOF'
+write_optional_mounts() {
+  for mount_spec in \
+    "/opt/binscripts:/opt/binscripts" \
+    "/a/src:/src" \
+    "/a/src:/a/src" \
+    "/workspace:/workspace" \
+    "/srv/miadi:/srv/miadi" \
+    "/var/lib/miadi:/var/lib/miadi" \
+    "/var/log/miadi:/var/log/miadi"; do
+    host_path="${mount_spec%%:*}"
+    container_path="${mount_spec#*:}"
+    if [ -e "$host_path" ]; then
+      printf '      - %s:%s\n' "$host_path" "$container_path"
+    fi
+  done
+}
+
+cat > "$COAIA_HOME/compose.yml" <<COMPOSE_EOF
 name: coaia-agent
 
 services:
@@ -81,6 +107,10 @@ services:
     volumes:
       - ${COAIA_REPO}:/workspace/coaia-agent
       - ${COAIA_HOME}:/opt/data
+$(write_optional_mounts)
+    ports:
+      - "${COAIA_VISUALIZER_HOST_PORT}:4321"
+      - "${COAIA_VISUALIZER_PORT}:${COAIA_VISUALIZER_PORT}"
     environment:
       HERMES_UID: ${HERMES_UID}
       HERMES_GID: ${HERMES_GID}
@@ -93,6 +123,9 @@ services:
       HERMES_TUI_DIR: /opt/hermes/ui-tui
       PYTHONPATH: /workspace/coaia-agent
       VIRTUAL_ENV: /opt/hermes/.venv
+      COAIAN_MF: ${COAIA_VISUALIZER_MEMORY}
+      COAIAV_PORT: ${COAIA_VISUALIZER_PORT}
+      COAIAV_AUDIO_DIR: ${COAIA_VISUALIZER_AUDIO_DIR}
       PATH: /opt/hermes/.venv/bin:/opt/data/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     command: ["sleep", "infinity"]
 COMPOSE_EOF
@@ -109,8 +142,12 @@ HERMES_GID=$HERMES_GID
 # You can add Hermes/API secrets here later if you use API-key providers.
 #
 # COAIA_TUI_MOUSE defaults to off so terminal selection, right-click copy,
-# and middle-click paste keep working in `coaia-hermes tui`.
+# and middle-click paste keep working in coaia-hermes tui.
 COAIA_TUI_MOUSE=off
+COAIA_VISUALIZER_HOST_PORT=$COAIA_VISUALIZER_HOST_PORT
+COAIA_VISUALIZER_PORT=$COAIA_VISUALIZER_PORT
+COAIA_VISUALIZER_MEMORY=$COAIA_VISUALIZER_MEMORY
+COAIA_VISUALIZER_AUDIO_DIR=$COAIA_VISUALIZER_AUDIO_DIR
 ENV_EOF
 else
   # Keep existing secrets/config, but make sure required keys exist.
@@ -120,6 +157,10 @@ else
   grep -q '^HERMES_UID=' "$COAIA_HOME/.env" || printf 'HERMES_UID=%s\n' "$HERMES_UID" >> "$COAIA_HOME/.env"
   grep -q '^HERMES_GID=' "$COAIA_HOME/.env" || printf 'HERMES_GID=%s\n' "$HERMES_GID" >> "$COAIA_HOME/.env"
   grep -q '^COAIA_TUI_MOUSE=' "$COAIA_HOME/.env" || printf 'COAIA_TUI_MOUSE=off\n' >> "$COAIA_HOME/.env"
+  grep -q '^COAIA_VISUALIZER_HOST_PORT=' "$COAIA_HOME/.env" || printf 'COAIA_VISUALIZER_HOST_PORT=%s\n' "$COAIA_VISUALIZER_HOST_PORT" >> "$COAIA_HOME/.env"
+  grep -q '^COAIA_VISUALIZER_PORT=' "$COAIA_HOME/.env" || printf 'COAIA_VISUALIZER_PORT=%s\n' "$COAIA_VISUALIZER_PORT" >> "$COAIA_HOME/.env"
+  grep -q '^COAIA_VISUALIZER_MEMORY=' "$COAIA_HOME/.env" || printf 'COAIA_VISUALIZER_MEMORY=%s\n' "$COAIA_VISUALIZER_MEMORY" >> "$COAIA_HOME/.env"
+  grep -q '^COAIA_VISUALIZER_AUDIO_DIR=' "$COAIA_HOME/.env" || printf 'COAIA_VISUALIZER_AUDIO_DIR=%s\n' "$COAIA_VISUALIZER_AUDIO_DIR" >> "$COAIA_HOME/.env"
 fi
 
 cat > "$COAIA_HOME/bin/coaia-hermes" <<'LAUNCHER_EOF'
@@ -163,6 +204,15 @@ tui_mouse_enabled() {
 set_tui_mouse_config() {
   local value="$1"
   compose exec -T --user hermes "$SERVICE" hermes config set display.mouse_tracking "$value" >/dev/null
+}
+
+load_visualizer_defaults() {
+  load_local_env_default COAIA_VISUALIZER_MEMORY
+  load_local_env_default COAIA_VISUALIZER_PORT
+  load_local_env_default COAIA_VISUALIZER_AUDIO_DIR
+  export COAIAN_MF="${COAIAN_MF:-${COAIA_VISUALIZER_MEMORY:-/opt/data/memory.jsonl}}"
+  export COAIAV_PORT="${COAIAV_PORT:-${COAIA_VISUALIZER_PORT:-4422}}"
+  export COAIAV_AUDIO_DIR="${COAIAV_AUDIO_DIR:-${COAIA_VISUALIZER_AUDIO_DIR:-/opt/data/audio}}"
 }
 
 run_tui() {
@@ -238,6 +288,28 @@ case "${1:-help}" in
     shift || true
     compose exec --user hermes "$SERVICE" hermes model "$@"
     ;;
+  visualizer)
+    shift || true
+    load_visualizer_defaults
+    compose exec --user hermes \
+      -e COAIAN_MF="$COAIAN_MF" \
+      -e COAIAV_PORT="$COAIAV_PORT" \
+      -e COAIAV_AUDIO_DIR="$COAIAV_AUDIO_DIR" \
+      "$SERVICE" coaia-visualizer --no-open --live -M "$COAIAN_MF" -p "$COAIAV_PORT" "$@"
+    ;;
+  visualizer-start)
+    shift || true
+    load_visualizer_defaults
+    compose exec -d --user hermes \
+      -e COAIAN_MF="$COAIAN_MF" \
+      -e COAIAV_PORT="$COAIAV_PORT" \
+      -e COAIAV_AUDIO_DIR="$COAIAV_AUDIO_DIR" \
+      "$SERVICE" coaia-visualizer --no-open --live -M "$COAIAN_MF" -p "$COAIAV_PORT" "$@"
+    ;;
+  narrative)
+    shift || true
+    compose exec --user hermes "$SERVICE" coaia-narrative "$@"
+    ;;
   tui)
     shift || true
     run_tui "$@"
@@ -268,6 +340,9 @@ Commands:
   auth ...    Manage Hermes credentials inside the isolated container state
   login       Alias for: auth add openai-codex
   model       Open Hermes model picker
+  visualizer  Run coaia-visualizer in the foreground (default port 4422)
+  visualizer-start  Start coaia-visualizer in the background (default port 4422)
+  narrative   Run coaia-narrative inside the container
   shell       Open a non-root shell as the hermes user
   hermes ...  Run any hermes command as the hermes user
   exec ...    Run any command as the hermes user
@@ -288,6 +363,12 @@ Files:
 TUI mouse:
   default: off, so terminal selection/copy and middle-click paste work
   enable:  COAIA_TUI_MOUSE=on coaia-hermes tui
+
+COAIA tools:
+  visualizer packages are installed in the image with npm -g
+  host ports: 4421->4321 for the visualizer default port, 4422->4422 for live runs
+  run:       coaia-hermes visualizer
+  background: coaia-hermes visualizer-start
 EOF
     ;;
   *)
@@ -314,6 +395,10 @@ container without using or modifying the existing `~/.hermes` installation.
 - Container subprocess home: `/opt/data/home`
 - TUI mouse tracking: off by default, so terminal selection/copy and
   middle-click paste keep working
+- COAIA visualizer: installed in the image with coaia-narrative; host ports
+  4421→4321 and 4422→4422 are exposed for local chart access
+- Optional Gaia mounts: existing host paths from /opt/binscripts, /a/src,
+  /workspace, /srv/miadi, /var/lib/miadi, and /var/log/miadi are mounted when present
 
 The compose file intentionally lives outside the repo so normal upstream pulls
 do not conflict with local container workflow files.
@@ -324,6 +409,7 @@ do not conflict with local container workflow files.
 coaia-hermes up
 coaia-hermes auth add openai-codex
 coaia-hermes tui
+coaia-hermes visualizer-start
 ```
 
 To temporarily enable TUI mouse/wheel tracking:
@@ -344,6 +430,21 @@ Run any Hermes command:
 coaia-hermes hermes doctor
 coaia-hermes hermes --tui --provider openai-codex
 ```
+
+Run the COAIA visualizer against the isolated memory JSONL:
+
+```bash
+coaia-hermes visualizer
+# or keep it running in the background
+coaia-hermes visualizer-start
+```
+
+Override the visualizer memory/port/audio paths with either ~/.coaia-agent/.env
+or one-shot environment variables:
+
+```bash
+COAIAN_MF=/opt/data/memory.jsonl COAIAV_PORT=4422 coaia-hermes visualizer
+```
 README_EOF
 
 docker compose --env-file "$COAIA_HOME/.env" -f "$COAIA_HOME/compose.yml" config >/dev/null
@@ -360,6 +461,7 @@ Next:
   coaia-hermes up
   coaia-hermes auth add openai-codex
   coaia-hermes tui
+  coaia-hermes visualizer-start
 EOF
 
 if [ "$START" = 1 ]; then
