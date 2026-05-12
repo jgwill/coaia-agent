@@ -45,6 +45,7 @@ referenced, not duplicated, here.
 | `pde-stc-session-lifecycle.spec.md` | NORTH lane N3 | PDE → STC JSONL lifecycle and three input paths |
 | `skill-and-plugin-authoring.spec.md` | NORTH lane N4 | RISE skills and lifecycle plugin authoring guide |
 | `visualizer-planning-narrative-flow.spec.md` | NORTH lane N5 | JSONL metadata for visualizer compatibility |
+| `github-project-runtime-memory-consumption.spec.md` | Hermes follow-on, 2026-05-09 | Runtime contract for canonical `metadata.github`, GitHub Project field projection, and visualizer/accountability alignment |
 | `acp-and-gateway-surfaces.spec.md` | NORTH lane N6 | ACP editor adapter and dashboard integration |
 | `medicine-wheel-governance.spec.md` | NORTH lane N7 | Ceremony phase annotation, OCAP, consent lifecycle |
 | `veritas-mmot-companion.spec.md` | NORTH lane N8 | Optional Veritas STC companion and MMOT loop |
