@@ -7,6 +7,8 @@ __pycache__/
 .venv/
 .venv
 .vscode/
+
+# Local secrets / environment files
 .env
 .op.env
 .env.local
@@ -22,6 +24,9 @@ __pycache__/
 .pip-cache/
 .uv-cache/
 compose.hermes.local.yml
+.env.*
+!.env.example
+.envrc
 export*
 __pycache__/model_tools.cpython-310.pyc
 __pycache__/web_tools.cpython-310.pyc
@@ -148,3 +153,4 @@ apps/desktop/demo/
 # pr-infographic-workflow reference (storage rule + lapse #8 / #COMMIT-1).
 infographic/
 package-lock.json
+_AUCAS/
