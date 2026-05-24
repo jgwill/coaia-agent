@@ -46,6 +46,7 @@ referenced, not duplicated, here.
 | `skill-and-plugin-authoring.spec.md` | NORTH lane N4 | RISE skills and lifecycle plugin authoring guide |
 | `visualizer-planning-narrative-flow.spec.md` | NORTH lane N5 | JSONL metadata for visualizer compatibility |
 | `github-project-runtime-memory-consumption.spec.md` | Hermes follow-on, 2026-05-09 | Runtime contract for canonical `metadata.github`, GitHub Project field projection, and visualizer/accountability alignment |
+| `260521-iris-miadi-agent-skill-lineage-integration.rispec.md` | Iris/Hermes follow-on, 2026-05-21 | Strategic bridge from issue-linked Iris skill evolution into Miadi-Agent recommendation issues and Coaia runtime planning lanes |
 | `acp-and-gateway-surfaces.spec.md` | NORTH lane N6 | ACP editor adapter and dashboard integration |
 | `medicine-wheel-governance.spec.md` | NORTH lane N7 | Ceremony phase annotation, OCAP, consent lifecycle |
 | `veritas-mmot-companion.spec.md` | NORTH lane N8 | Optional Veritas STC companion and MMOT loop |
