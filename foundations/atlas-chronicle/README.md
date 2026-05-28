@@ -28,8 +28,10 @@ foundations/atlas-chronicle/
 - `COPILOT-DELEGATION-PROMPT.md`: reusable delegation prompt with boundary and traceability requirements.
 - `EVALUATION.md`: scoring and comparison frame for first Copilot output.
 
+## Iteration Extensions
+- `PROTOCOL-AND-SYSTEM.md`: second-iteration protocol and minimum system support required to run deeper internet/academic-source passes while preserving traceability and privacy boundaries.
+
 ## Public/Private Boundary
 - This packet is public-safe by design.
 - Do not include private Atlas Chronicle raw episode packets, transcripts, or audio artifacts.
 - Any future examples must be synthetic or explicitly sanitized.
-
