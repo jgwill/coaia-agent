@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/jgwill/src/issues/319",
+  "repository_url": "https://api.github.com/repos/jgwill/src",
+  "labels_url": "https://api.github.com/repos/jgwill/src/issues/319/labels{/name}",
+  "comments_url": "https://api.github.com/repos/jgwill/src/issues/319/comments",
+  "events_url": "https://api.github.com/repos/jgwill/src/issues/319/events",
+  "html_url": "https://github.com/jgwill/src/issues/319",
+  "id": 3823022542,
+  "node_id": "I_kwDOPHSM3c7j3rHO",
+  "number": 319,
+  "title": "claude_hooks refinement",
+  "user": {
+    "login": "miadisabelle",
+    "id": 201760617,
+    "node_id": "U_kgDODAafaQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/201760617?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/miadisabelle",
+    "html_url": "https://github.com/miadisabelle",
+    "followers_url": "https://api.github.com/users/miadisabelle/followers",
+    "following_url": "https://api.github.com/users/miadisabelle/following{/other_user}",
+    "gists_url": "https://api.github.com/users/miadisabelle/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/miadisabelle/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/miadisabelle/subscriptions",
+    "organizations_url": "https://api.github.com/users/miadisabelle/orgs",
+    "repos_url": "https://api.github.com/users/miadisabelle/repos",
+    "events_url": "https://api.github.com/users/miadisabelle/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/miadisabelle/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2026-01-16T17:54:55Z",
+  "updated_at": "2026-01-16T17:54:55Z",
+  "closed_at": null,
+  "author_association": "COLLABORATOR",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "related ##248 #253\n\n* @STCGoal Fully organized and reusable Session Event Data ...",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/jgwill/src/issues/319/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/jgwill/src/issues/319/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null
+}

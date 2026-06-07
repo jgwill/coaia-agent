@@ -1,0 +1,84 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/session_start_hook.sh"
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/before_agent_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/corrective_feedback_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/accepted_redirection_hook.sh"
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/before_tool_hook.sh"
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/after_tool_hook.sh"
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/after_agent_hook.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/notification_hook.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /a/src/scripts/gemini_hooks/session_end_hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

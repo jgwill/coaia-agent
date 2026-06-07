@@ -1,0 +1,24 @@
+# Hermes Agent Shell Hooks Configuration
+# Analogous to Claude/Gemini/Codex hooking sets.
+# Place this in ~/.hermes/config.yaml or merge with existing.
+
+hooks:
+  on_session_start:
+    - command: "/a/src/scripts/hermes_hooks/session_start_hook.sh"
+  on_session_end:
+    - command: "/a/src/scripts/hermes_hooks/session_end_hook.sh"
+  pre_tool_call:
+    - command: "/a/src/scripts/hermes_hooks/pre_tool_use_hook.sh"
+  post_tool_call:
+    - command: "/a/src/scripts/hermes_hooks/post_tool_use_hook.sh"
+  subagent_stop:
+    - command: "/a/src/scripts/hermes_hooks/subagent_stop_hook.sh"
+  pre_approval_request:
+    - command: "/a/src/scripts/hermes_hooks/permission_request_hook.sh"
+  post_approval_response:
+    - command: "/a/src/scripts/hermes_hooks/accepted_redirection_hook.sh"
+  pre_llm_call:
+    - command: "/a/src/scripts/hermes_hooks/user_prompt_submit_hook.sh"
+    - command: "/a/src/scripts/hermes_hooks/corrective_feedback_hook.sh"
+  agent:start:
+    - command: "/a/src/scripts/hermes_hooks/notification_hook.sh"

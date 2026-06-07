@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/session_start_hook.sh"
+      }
+    ],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/session_end_hook.sh"
+      }
+    ],
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/user_prompt_submitted_hook.sh"
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/pre_tool_use_hook.sh"
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/post_tool_use_hook.sh"
+      }
+    ],
+    "postToolUseFailure": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/post_tool_use_failure_hook.sh"
+      }
+    ],
+    "errorOccurred": [
+      {
+        "type": "command",
+        "bash": "bash /a/src/scripts/copilot_hooks/error_occurred_hook.sh"
+      }
+    ]
+  }
+}
