@@ -1,0 +1,92 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/session_start_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Saving Codex session start"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/user_prompt_submit_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Saving Codex user prompt"
+          },
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/corrective_feedback_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Checking Codex corrective feedback"
+          },
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/accepted_redirection_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Checking Codex accepted redirection"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/pre_tool_use_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Saving Codex tool proposal"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/permission_request_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Saving Codex permission request"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/post_tool_use_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Saving Codex tool result"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/codex_hooks/stop_hook.sh",
+            "timeout": 30,
+            "statusMessage": "Saving Codex turn stop"
+          }
+        ]
+      }
+    ]
+  }
+}
