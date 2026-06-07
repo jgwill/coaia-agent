@@ -27,7 +27,7 @@ gemini_init_session() {
         GEMINI_SESSION_ID="unknown-session"
     fi
 
-    GEMINI_SESSIONDATA_ROOT="${GEMINI_SESSIONDATA_ROOT:-/src/_sessiondata}"
+    GEMINI_SESSIONDATA_ROOT="${GEMINI_SESSIONDATA_ROOT:-/workspace/coaia-agent/.hch/sessions}"
     GEMINI_SESSION_DIR="$GEMINI_SESSIONDATA_ROOT/$GEMINI_SESSION_ID"
     mkdir -p "$GEMINI_SESSION_DIR" "$GEMINI_SESSIONDATA_ROOT/data"
 }

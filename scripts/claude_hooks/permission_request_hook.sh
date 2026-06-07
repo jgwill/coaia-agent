@@ -3,7 +3,7 @@ input=$(cat -)
 session_id=$(echo "$input" | jq -r .session_id)
 
 # Determine base directory - check for /src first, then fallback to current repo location
-if [ -d "/src/_sessiondata" ]; then
+if [ -d "/workspace/coaia-agent/.hch/sessions" ]; then
     base_dir="/src"
 else
     # Get script directory and go up two levels to repo root

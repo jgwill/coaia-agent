@@ -1,7 +1,7 @@
 #!/bin/bash
 input=$(cat -)
 session_id=$(echo "$input" | jq -r .session_id)
-session_dir="/src/_sessiondata"
+session_dir="/workspace/coaia-agent/.hch/sessions"
 mkdir -p "$session_dir/data"
 session_common_data_file="$session_dir/data/session_starts_all.jsonl"
 output_dir="$session_dir/$session_id"
