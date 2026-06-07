@@ -8,7 +8,7 @@ input=$(cat -)
 session_id=$(echo "$input" | jq -r .session_id)
 
 # Determine base directory
-if [ -d "/src/_sessiondata" ]; then
+if [ -d "/workspace/coaia-agent/.hch/sessions" ]; then
     base_dir="/src"
 else
     script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
