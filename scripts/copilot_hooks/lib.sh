@@ -32,7 +32,7 @@ copilot_init_session() {
         COPILOT_SESSION_ID="unknown-session"
     fi
 
-    COPILOT_SESSIONDATA_ROOT="${COPILOT_SESSIONDATA_ROOT:-/workspace/coaia-agent/.hch/sessions}"
+    COPILOT_SESSIONDATA_ROOT="${COPILOT_SESSIONDATA_ROOT:-/workspace/coaia-agent/.asterion/sessions}"
     COPILOT_SESSION_DIR="$COPILOT_SESSIONDATA_ROOT/$COPILOT_SESSION_ID"
     mkdir -p "$COPILOT_SESSION_DIR" "$COPILOT_SESSIONDATA_ROOT/data"
 }

@@ -27,7 +27,7 @@ openclaw_init_session() {
         OPENCLAW_SESSION_ID="unknown-openclaw-session"
     fi
 
-    OPENCLAW_SESSIONDATA_ROOT="${OPENCLAW_SESSIONDATA_ROOT:-/workspace/coaia-agent/.hch/sessions}"
+    OPENCLAW_SESSIONDATA_ROOT="${OPENCLAW_SESSIONDATA_ROOT:-/workspace/coaia-agent/.asterion/sessions}"
     OPENCLAW_SESSION_DIR="$OPENCLAW_SESSIONDATA_ROOT/$OPENCLAW_SESSION_ID"
     mkdir -p "$OPENCLAW_SESSION_DIR" "$OPENCLAW_SESSIONDATA_ROOT/data"
 }
