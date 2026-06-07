@@ -10,7 +10,7 @@ else
     base_dir="$(cd "$script_dir/../.." && pwd)"
 fi
 
-output_dir="$base_dir/_sessiondata/$session_id"
+output_dir="/workspace/coaia-agent/.hch/sessions/$session_id"
 mkdir -p "$output_dir"
 
 # Save last_assistant_message as its own event stream for ceremony-session-observer

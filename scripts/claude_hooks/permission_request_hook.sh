@@ -11,7 +11,7 @@ else
     base_dir="$(cd "$script_dir/../.." && pwd)"
 fi
 
-output_dir="$base_dir/_sessiondata/$session_id"
+output_dir="/workspace/coaia-agent/.hch/sessions/$session_id"
 mkdir -p "$output_dir"
 echo "$input" >> "$output_dir/_claude_PermissionRequest.jsonl"
 echo "$input" >  "$output_dir/last_claude_PermissionRequest.json"
