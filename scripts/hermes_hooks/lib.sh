@@ -34,7 +34,7 @@ hermes_init_session() {
         HERMES_SESSION_ID="unknown-hermes-session"
     fi
 
-    HERMES_SESSIONDATA_ROOT="${HERMES_SESSIONDATA_ROOT:-/workspace/coaia-agent/.hch/sessions}"
+    HERMES_SESSIONDATA_ROOT="${HERMES_SESSIONDATA_ROOT:-/workspace/coaia-agent/.asterion/sessions}"
     HERMES_SESSION_DIR="$HERMES_SESSIONDATA_ROOT/$HERMES_SESSION_ID"
     mkdir -p "$HERMES_SESSION_DIR" "$HERMES_SESSIONDATA_ROOT/data"
 }

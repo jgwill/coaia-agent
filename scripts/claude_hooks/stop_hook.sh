@@ -2,7 +2,7 @@
 input=$(cat -)
 session_id=$(echo "$input" | jq -r .session_id)
 transcript_path=$(echo "$input" | jq -r .transcript_path)
-output_dir="/workspace/coaia-agent/.hch/sessions/$session_id"
+output_dir="/workspace/coaia-agent/.asterion/sessions/$session_id"
 mkdir -p "$output_dir"
 
 # Capture all assistant responses as they accumulate (JSONL parsing)
