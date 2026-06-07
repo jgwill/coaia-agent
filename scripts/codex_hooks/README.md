@@ -47,7 +47,7 @@ codex_hooks = true
 Each hook writes compact JSONL under:
 
 ```text
-/src/_sessiondata/<session_id>/
+/workspace/coaia-agent/.hch/sessions/<session_id>/
 ```
 
 Main streams:

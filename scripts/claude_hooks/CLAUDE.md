@@ -25,7 +25,7 @@ to avoid false positives on commit message text that contains `-a` as a substrin
 | Gemini  | `scripts/gemini_hooks/`             | `before_tool_hook.sh`  |
 | Copilot | `scripts/copilot_hooks/`            | `pre_tool_use_hook.sh` |
 
-All hooks also save session artifacts to `/src/_sessiondata/<session_id>/`.
+All hooks also save session artifacts to `/workspace/coaia-agent/.hch/sessions/<session_id>/`.
 
 ## Related Docs
 
@@ -34,7 +34,7 @@ All hooks also save session artifacts to `/src/_sessiondata/<session_id>/`.
 * Another variation may be at `/workspace/AetherialProject/src/agent-session-insights/`
   or `/src/AetherialProject/src/agent-session-insights/` depending on the system.
 
-`/src/_sessiondata/CLAUDE.md`
+`/workspace/coaia-agent/.hch/sessions/CLAUDE.md`
 
 # Discovery timestamp 2510211520:
 ## https://github.com/disler/claude-code-hooks-mastery
