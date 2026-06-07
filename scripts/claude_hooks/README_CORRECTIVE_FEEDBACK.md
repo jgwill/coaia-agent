@@ -13,7 +13,7 @@ When you reject a tool proposal (click "No" on permission dialog) and provide co
 
 ## Captured Data
 
-Each rejection is stored in `/workspace/coaia-agent/.hch/sessions/<session_id>/_claude_CorrectiveFeedback.jsonl`:
+Each rejection is stored in `/workspace/coaia-agent/.asterion/sessions/<session_id>/_claude_CorrectiveFeedback.jsonl`:
 
 ```json
 {
@@ -109,13 +109,13 @@ See `/src/llms/llms-managerial-moment-of-truth.md` for MMOT framework details.
 **Debug:**
 ```bash
 # Check if hook is running
-tail -10 /workspace/coaia-agent/.hch/sessions/<session_id>/trace.log
+tail -10 /workspace/coaia-agent/.asterion/sessions/<session_id>/trace.log
 
 # Check for rejection entries
 grep "is_error.*true" ~/.claude/projects/<project>/<session_id>.jsonl
 
 # Manually test hook
-cd /workspace/coaia-agent/.hch/sessions/<session_id>
+cd /workspace/coaia-agent/.asterion/sessions/<session_id>
 bash /src/scripts/claude_hooks/corrective_feedback_hook.sh <<EOF
 {"session_id":"<session_id>","transcript_path":"<transcript_path>","hook_event_name":"UserPromptSubmit","prompt":"test","permission_mode":"default"}
 EOF

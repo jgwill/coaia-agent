@@ -5,7 +5,7 @@ This directory contains a suite of ceremonial hooks for the **OpenClaw** environ
 ## 🏹 Core Purpose
 These hooks transform OpenClaw from a stateless agent into a relationally accountable participant in the workspace by:
 1.  **Distilling Events**: Recording session starts, ends, and tool invocations.
-2.  **Maintaining State**: Archiving session-specific data to `/workspace/coaia-agent/.hch/sessions`.
+2.  **Maintaining State**: Archiving session-specific data to `/workspace/coaia-agent/.asterion/sessions`.
 3.  **Ensuring Safety**: Validating sensitive operations (like bash commands) before execution.
 
 ---
@@ -25,7 +25,7 @@ The following variables guide the flow of data-fish through the hooks:
 
 | Variable | Purpose | Default |
 | :--- | :--- | :--- |
-| `OPENCLAW_SESSIONDATA_ROOT` | Root directory for event logs. | `/workspace/coaia-agent/.hch/sessions` |
+| `OPENCLAW_SESSIONDATA_ROOT` | Root directory for event logs. | `/workspace/coaia-agent/.asterion/sessions` |
 | `OPENCLAW_SESSION_ID` | Fallback ID if not provided in payload. | `unknown-openclaw-session` |
 | `OPENCLAW_HOOKS_TOKEN` | Auth token for external webhooks. | (unset) |
 
@@ -35,7 +35,7 @@ To ensure the hooks are breathing correctly, simulate a session start:
 ```bash
 echo '{"session_id": "test-weaving", "event": "manual"}' | bash session_start_hook.sh
 ```
-Check for the existence of `/workspace/coaia-agent/.hch/sessions/test-weaving/` to confirm.
+Check for the existence of `/workspace/coaia-agent/.asterion/sessions/test-weaving/` to confirm.
 
 ---
 

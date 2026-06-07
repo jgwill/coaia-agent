@@ -29,7 +29,7 @@ codex_init_session() {
         CODEX_SESSION_ID="unknown-session"
     fi
 
-    CODEX_SESSIONDATA_ROOT="${CODEX_SESSIONDATA_ROOT:-/workspace/coaia-agent/.hch/sessions}"
+    CODEX_SESSIONDATA_ROOT="${CODEX_SESSIONDATA_ROOT:-/workspace/coaia-agent/.asterion/sessions}"
     CODEX_SESSION_DIR="$CODEX_SESSIONDATA_ROOT/$CODEX_SESSION_ID"
     mkdir -p "$CODEX_SESSION_DIR" "$CODEX_SESSIONDATA_ROOT/data"
 }
