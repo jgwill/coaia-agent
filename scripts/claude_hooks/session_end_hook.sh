@@ -2,7 +2,7 @@
 input=$(cat -)
 session_id=$(echo "$input" | jq -r .session_id)
 transcript_path=$(echo "$input" | jq -r .transcript_path)
-output_dir="/src/_sessiondata/$session_id"
+output_dir="/workspace/coaia-agent/.hch/sessions/$session_id"
 mkdir -p "$output_dir"
 
 # Archive complete transcript on session end
