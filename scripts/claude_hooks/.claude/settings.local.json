@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs -I {} sh -c \"echo \"\"=== {} ===\"\" && cat \"\"{}\"\"\")",
+      "Bash(sudo -u jgi cat:*)",
+      "Bash(sudo -u jgi jq:*)",
+      "Bash(sudo -u jgi grep:*)",
+      "Bash(bash:*)"
+    ]
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make *)",
+      "Bash(make)",
+      "Bash(cmake *)",
+      "Bash(ls *)",
+      "Bash(ls)",
+      "Bash(cat *)",
+      "Bash(pwd)",
+      "Bash(cd *)",
+      "Bash(echo *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(which *)",
+      "Bash(whoami)",
+      "Bash(date)",
+      "Bash(env)",
+      "Bash(printenv *)",
+      "Bash(file *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(tree *)",
+      "Bash(tree)",
+      "Bash(diff *)",
+      "Bash(stat *)",
+      "Bash(du *)",
+      "Bash(df *)",
+      "Bash(uname *)",
+      "Bash(hostname)",
+      "Bash(id)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(cd* && git log*)",
+      "Bash(git diff*)",
+      "Bash(git branch*)",
+      "Bash(git show*)",
+      "Bash(git fetch*)",
+      "Bash(git checkout*)",
+      "Bash(git pull*)",
+      "Bash(git remote*)",
+      "Bash(git rev-parse*)",
+      "Bash(git stash list*)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(pip list*)",
+      "Bash(pip show*)",
+      "Bash(node *)",
+      "Bash(npm list*)",
+      "Bash(npm run *)",
+      "Bash(npx *)",
+      "Bash(docker ps*)",
+      "Bash(docker logs*)",
+      "Bash(docker compose ps*)",
+      "Bash(docker compose logs*)",
+      "Bash(docker exec *)",
+      "Bash(jq *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(cut *)",
+      "Bash(awk *)",
+      "Bash(sed *)",
+      "Bash(xargs *)",
+      "Bash(basename *)",
+      "Bash(dirname *)",
+      "Bash(realpath *)",
+      "Bash(readlink *)",
+      "Bash(md5sum *)",
+      "Bash(sha256sum *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(touch *)",
+      "Bash(mkdir *)",
+      "Bash(ln *)",
+      "Bash(chmod *)",
+      "Bash(tar *)",
+      "Bash(zip *)",
+      "Bash(unzip *)",
+      "Bash(tee *)",
+      "Bash(printf *)",
+      "Bash(test *)",
+      "Bash(true)",
+      "Bash(false)",
+      "Bash(type *)",
+      "Bash(command *)",
+      "Bash(ldd *)",
+      "Bash(nm *)",
+      "Bash(objdump *)",
+      "Bash(strings *)",
+      "Bash(gcc *)",
+      "Bash(g++ *)",
+      "Bash(cc *)",
+      "Bash(c++ *)",
+      "Bash(cd *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git stash*)",
+      "Bash(gh *)"
+    ]
+  },
+  "model": "opus",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/stop_hook.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/user_prompt_submit_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/corrective_feedback_hook.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/accepted_redirection_hook.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/session_start_hook.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/pre_tool_use_hook.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/post_tool_use_hook.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/notification_hook.sh"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/subagent_stop_hook.sh"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/pre_compact_hook.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/session_end_hook.sh"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/permission_request_hook.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/post_tool_use_failure_hook.sh"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /src/scripts/claude_hooks/subagent_start_hook.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "agentPushNotifEnabled": true,
+  "voiceEnabled": true
+}
