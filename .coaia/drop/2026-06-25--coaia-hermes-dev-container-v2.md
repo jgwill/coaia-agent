@@ -26,6 +26,16 @@ coaia-hermes rebuild      # or: coaia-hermes up && coaia-hermes provision
 coaia-hermes shell        # now a mia:bears shell with /opt/binscripts/load.sh sourced if present
 ```
 
+## Operational notes (learned 2026-06-25, do not "work around")
+- **`coaia-hermes rebuild` failed with `invalid spec: :/workspace/coaia-agent: empty section between colons`.** Root cause: the *old* generated `compose.yml` used `${COAIA_REPO}` interpolation, but `~/.coaia-agent/.env` had been reduced to **secrets only** (lost `COAIA_REPO`/`COAIA_HOME`/`HERMES_UID`/`HERMES_GID`) → blank substitution. **Fix:** re-run the generator **as `mia`** — it now bakes literal paths into `compose.yml` (no interpolation) *and* re-seeds the missing keys into `.env` (secrets preserved). Do not patch the symptom; regenerate.
+  ```bash
+  sudo -iu mia bash -lc 'COAIA_REPO=/a/src/coaia-agent /a/src/coaia-agent/scripts/coaia-hermes-dev-init.sh'
+  ```
+  Old files are backed up to `~/.coaia-agent/{compose.yml,bin/coaia-hermes}.pre-v2.bak`.
+- **Identity naming nuance:** `mia` exists in-container (`mia:x:1007:1111::/opt/data/home:/bin/bash`) and dev work runs as it, so files are owned `1007:1111` = host **mia:bears** (correct, non-root). But `whoami` shows **`hermes`** because uid 1007 is shared with the upstream `hermes` user (which must keep 1007 so the bind-mounted `/opt/data` stays owned by host mia). Forcing the *display* name to `mia` would require renaming `hermes` → breaks s6 + reintroduces upstream-merge conflicts. The permission goal is met; the name is cosmetic.
+- **New mounts + active `load.sh` need a container recreate.** The running container predates v2 (2 mounts). `coaia-hermes up` (or `rebuild`) recreates it with all mounts and re-runs `provision`. `coaia-hermes provision` alone adds `mia:bears` + `.bashrc` to a live container without recreating.
+- **The June-11 `hermes-update-autostash` stash holds 1578 untracked files** (`iris/memories/{MEMORY,USER}.md`, `iris/skills`, foundations, `.claude/settings.local.json`, `.mcp.json`). Decision: **keep** — recover via `git stash branch` if needed; do not drop blind.
+
 ## Source Refs
 - generator: `scripts/coaia-hermes-dev-init.sh`
 - issue: jgwill/coaia-agent#15
