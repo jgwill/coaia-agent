@@ -154,3 +154,15 @@ apps/desktop/demo/
 infographic/
 package-lock.json
 _AUCAS/
+
+# Local Atlas/COAIA lineage imports and session exports.
+# These are host/workspace context or private source mirrors; promote reviewed
+# artifacts into rispecs, charts, or issue-backed paths instead of committing the
+# raw copied trees.
+.claude/
+asterion-system-design/
+iris/
+miadi/
+last_session_export.jsonl
+scripts/backup-dotcoaia-agent.sh
+scripts/backup-srccoaia-agent.sh
