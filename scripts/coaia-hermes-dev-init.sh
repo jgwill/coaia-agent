@@ -89,7 +89,7 @@ write_optional_mounts() {
   # Each host path is mounted at the SAME path inside the container so absolute
   # references (scripts, wikis, repo clones) resolve identically host-side and
   # container-side. Entries are skipped when the host path is absent, so this
-  # list is safe to extend across machines. `/opt/binscripts/load.md` is sourced
+  # list is safe to extend across machines. `/opt/binscripts/load.sh` is sourced
   # into the dev shell via the identity provisioning step (see launcher).
   for mount_spec in \
     "/opt/binscripts:/opt/binscripts" \
@@ -281,7 +281,7 @@ COAIA_GROUP="${COAIA_GROUP:-bears}"
 COAIA_GID="${COAIA_GID:-1111}"
 
 # Idempotently create COAIA_GROUP/COAIA_USER inside the RUNNING container, own
-# the dev HOME, and source /opt/binscripts/load.md into the shell rc. The
+# the dev HOME, and source /opt/binscripts/load.sh into the shell rc. The
 # upstream `hermes` user is left untouched (s6 still drops to it); we only ADD a
 # named identity so files written from dev sessions land owned by the host team
 # group `bears` and the shell greets us by name. Safe to re-run. The /etc/passwd
@@ -307,8 +307,8 @@ mkdir -p /opt/data/home
 chown "$CU:$CG" /opt/data/home 2>/dev/null || true
 BRC=/opt/data/home/.bashrc
 touch "$BRC"
-if ! grep -q 'binscripts/load.md' "$BRC" 2>/dev/null; then
-  printf '\n# COAIA: source shared bin environment when present (mounted from host)\n[ -f /opt/binscripts/load.md ] && . /opt/binscripts/load.md\n' >> "$BRC"
+if ! grep -q 'binscripts/load.sh' "$BRC" 2>/dev/null; then
+  printf '\n# COAIA: source shared bin environment when present (mounted from host)\n[ -f /opt/binscripts/load.sh ] && . /opt/binscripts/load.sh\n' >> "$BRC"
 fi
 chown "$CU:$CG" "$BRC" 2>/dev/null || true
 echo "[provision] identity ${CU}:${CG} (${CUID}:${CGID}) ready; HOME=/opt/data/home"
@@ -445,7 +445,7 @@ Identity:
   dev work runs as COAIA_USER:COAIA_GROUP (default mia:bears) — a real named
   user added on top of the upstream `hermes` user, so written files land owned
   by the host team group. Override via COAIA_USER/COAIA_UID/COAIA_GROUP/COAIA_GID
-  in ~/.coaia-agent/.env. /opt/binscripts/load.md is sourced in the dev .bashrc
+  in ~/.coaia-agent/.env. /opt/binscripts/load.sh is sourced in the dev .bashrc
   when present.
 
 TUI mouse:
@@ -486,7 +486,7 @@ container without using or modifying the existing `~/.hermes` installation.
   for every `coaia-hermes shell|tui|hermes|exec` so files we write are owned by
   the host team group `bears`, not root. Run `coaia-hermes provision` to (re)apply
   after a full container recreate.
-- Shell environment: `/opt/binscripts/load.md` is sourced into the dev `.bashrc`
+- Shell environment: `/opt/binscripts/load.sh` is sourced into the dev `.bashrc`
   when present (mounted from the host).
 - TUI mouse tracking: off by default, so terminal selection/copy and
   middle-click paste keep working

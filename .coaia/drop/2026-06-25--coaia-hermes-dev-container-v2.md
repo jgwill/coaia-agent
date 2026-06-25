@@ -12,10 +12,10 @@
 - **Isolation mount strategy** (unchanged core): `~/.coaia-agent → /opt/data`, `HOME=/opt/data/home`, repo → `/workspace/coaia-agent`.
 - **Mounts** (same path host↔container, skipped when absent): `/opt/binscripts`, `/a/src`, `/usr/local/src`, `/workspace/repos`, `/workspace/wikis`, `/srv/miadi`, `/var/lib/miadi`, `/var/log/miadi`.
 - **Named identity `mia:bears`**: a real user is added on top of the upstream `hermes` user via an idempotent `provision_identity` step (auto on `up`/`rebuild`, or `coaia-hermes provision`). `COAIA_UID`/`COAIA_GID` auto-resolve from the host (mia=1007, bears=1111) and are overridable via `~/.coaia-agent/.env`. All `coaia-hermes shell|tui|hermes|exec|visualizer|narrative` now run as `$COAIA_USER` so written files are owned by the host team group `bears`, never root.
-- **`load.md`**: `/opt/binscripts/load.md` is sourced into the dev `.bashrc` when present (guarded — currently absent on host, no-ops safely).
+- **`load.sh`**: `/opt/binscripts/load.sh` is sourced into the dev `.bashrc` when present (guarded with `[ -f ]`; the host `/opt/binscripts/load.sh` exists, so the dev shell picks up the shared bin environment).
 
 ## Why this is non-destructive for upstream refreshes
-The **image stays 100% upstream**. The only in-repo artifact is the generator under `scripts/` (a path upstream never touches), and all customization (mounts, `mia:bears`, `load.md`) lives in the generated `~/.coaia-agent/` files. The upstream `hermes` user + s6 supervision tree are left fully intact, so `git pull` of upstream never conflicts on this work.
+The **image stays 100% upstream**. The only in-repo artifact is the generator under `scripts/` (a path upstream never touches), and all customization (mounts, `mia:bears`, `load.sh`) lives in the generated `~/.coaia-agent/` files. The upstream `hermes` user + s6 supervision tree are left fully intact, so `git pull` of upstream never conflicts on this work.
 
 ## How to apply v2 (run as `mia`)
 ```bash
@@ -23,7 +23,7 @@ The **image stays 100% upstream**. The only in-repo artifact is the generator un
 /workspace/coaia-agent/scripts/coaia-hermes-dev-init.sh
 # rebuild + reprovision the running container
 coaia-hermes rebuild      # or: coaia-hermes up && coaia-hermes provision
-coaia-hermes shell        # now a mia:bears shell with /opt/binscripts/load.md sourced if present
+coaia-hermes shell        # now a mia:bears shell with /opt/binscripts/load.sh sourced if present
 ```
 
 ## Source Refs
