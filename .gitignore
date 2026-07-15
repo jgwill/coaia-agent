@@ -152,7 +152,6 @@ apps/desktop/demo/
 # PR body is the archive. See the hermes-agent-dev skill's
 # pr-infographic-workflow reference (storage rule + lapse #8 / #COMMIT-1).
 infographic/
-package-lock.json
 _AUCAS/
 
 # Local Atlas/COAIA lineage imports and session exports.
